@@ -8,39 +8,32 @@
     <style>
         :root { --mcm-orange: #f05a28; --pool-blue: #00afcb; --desert-sand: #f3e5ab; --white: #ffffff; }
         body { font-family: 'Lexend Deca', sans-serif; background: var(--desert-sand); margin: 0; padding: 15px; padding-bottom: 120px; -webkit-tap-highlight-color: transparent; }
-        .header-container { text-align: center; margin: 20px 0; }
-        h1 { font-family: 'Pacifico', cursive; color: var(--mcm-orange); font-size: 2.2rem; margin: 0; text-shadow: 2px 2px 0px white; transform: rotate(-1deg); }
-        .section-title { font-family: 'Righteous', cursive; font-size: 1.1rem; color: #444; text-transform: uppercase; margin: 25px 0 10px; border-bottom: 3px solid var(--pool-blue); display: inline-block; padding-bottom: 5px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
-        .card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 4px solid transparent; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; min-height: 140px; }
+        h1 { font-family: 'Pacifico', cursive; color: var(--mcm-orange); font-size: 2.2rem; text-align: center; margin: 10px 0; text-shadow: 2px 2px white; transform: rotate(-1deg); }
+        .section-title { font-family: 'Righteous', cursive; font-size: 1.1rem; color: #444; text-transform: uppercase; margin: 25px 0 10px; border-bottom: 3px solid var(--pool-blue); display: inline-block; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: 4px solid transparent; display: flex; flex-direction: column; min-height: 140px; cursor: pointer; }
         .card.checked { border-color: var(--pool-blue); background: #e0f7fa; }
         .card.checked img { filter: grayscale(100%) opacity(0.3); }
         .card img { width: 100%; height: 110px; object-fit: cover; background: #ddd; display: block; }
-        .card-label { padding: 8px; font-size: 0.8rem; font-weight: 700; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; color: #222; line-height: 1.2; }
+        .card-label { padding: 8px; font-size: 0.8rem; font-weight: 700; text-align: center; flex-grow: 1; display: flex; align-items: center; justify-content: center; color: #222; }
         .landmark { grid-column: span 2; flex-direction: row; min-height: 90px; }
         .landmark img { width: 100px; height: 90px; }
         .door-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .door-btn { border: none; padding: 12px 5px; border-radius: 10px; color: white; font-weight: 700; text-shadow: 1px 1px 2px black; font-size: 0.75rem; box-shadow: 0 4px 0 rgba(0,0,0,0.2); cursor: pointer; }
-        .door-btn span { display: block; font-size: 1.3rem; margin-top: 3px; }
-        .reset-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 20px; background: rgba(243, 229, 171, 0.95); backdrop-filter: blur(5px); z-index: 100; box-sizing: border-box; }
-        .reset-btn { width: 100%; padding: 12px; background: #444; color: white; border: none; border-radius: 50px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+        .door-btn { border: none; padding: 12px 5px; border-radius: 10px; color: white; font-weight: 800; text-shadow: 1px 1px 2px black; font-size: 0.75rem; box-shadow: 0 4px 0 rgba(0,0,0,0.2); }
+        .door-btn span { display: block; font-size: 1.4rem; }
+        .reset-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 15px; background: rgba(243, 229, 171, 0.9); backdrop-filter: blur(5px); z-index: 100; }
+        .reset-btn { width: 100%; padding: 12px; background: #444; color: white; border: none; border-radius: 50px; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body>
-    <div class="header-container"><h1>🌴 Kaplow Modern Hunt</h1></div>
-    
+    <h1>🌴 Kaplow Modern Hunt</h1>
     <div class="section-title">Historic Landmarks</div>
     <div id="landmark-grid" class="grid"></div>
-
     <div class="section-title">Architectural Features</div>
     <div id="feature-grid" class="grid"></div>
-
     <div class="section-title">Door Tally</div>
     <div id="door-grid" class="door-grid"></div>
-
-    <div class="reset-container">
-        <button class="reset-btn" onclick="resetAll()">Reset Scavenger Hunt</button>
-    </div>
+    <div class="reset-container"><button class="reset-btn" onclick="resetAll()">Reset Hunt</button></div>
 
     <script>
         const landmarks = [
@@ -51,7 +44,6 @@
             { id: 'l5', n: "Bank of America", i: "bank.jpg", d: "588 S Palm Canyon", c: "#c41230" },
             { id: 'l6', n: "Aerial Tramway", i: "tramway.jpg", d: "1 Tramway Rd", c: "#32cd32" }
         ];
-
         const features = [
             { id: 'f1', n: "Butterfly Roof", i: "butterfly.jpg", c: "#00afcb" },
             { id: 'f2', n: "Swiss Miss", i: "swissmiss.jpg", c: "#f05a28" },
@@ -63,64 +55,47 @@
             { id: 'f8', n: "Desert Landscape", i: "desertlandscaping.jpg", c: "#f05a28" }
         ];
 
-        const doors = ['Orange', 'Pink', 'Turquoise', 'Yellow', 'Red', 'Lime'];
-        const doorColors = ['#f05a28', '#f4a7b9', '#00afcb', '#ffd200', '#c41230', '#32cd32'];
-
         function init() {
             const lGrid = document.getElementById('landmark-grid');
             const fGrid = document.getElementById('feature-grid');
             const dGrid = document.getElementById('door-grid');
 
-            // Render Landmarks
-            landmarks.forEach(item => {
+            const createCard = (item, isLandmark) => {
                 const card = document.createElement('div');
-                card.className = `card landmark ${localStorage.getItem(item.id) ? 'checked' : ''}`;
-                card.innerHTML = `<img src="${item.i}" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='${item.c}';">` +
-                                `<div class="card-label"><div><strong>${item.n}</strong><br><small>${item.d}</small></div></div>`;
-                card.onclick = () => toggle(item.id, card);
-                lGrid.appendChild(card);
-            });
+                card.className = `card ${isLandmark ? 'landmark' : ''} ${localStorage.getItem(item.id) ? 'checked' : ''}`;
+                
+                // Use a relative path specifically for GitHub Pages
+                const img = document.createElement('img');
+                img.src = './' + item.i; 
+                img.onerror = () => {
+                    img.style.display = 'none';
+                    card.style.backgroundColor = item.c;
+                };
 
-            // Render Features
-            features.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `card ${localStorage.getItem(item.id) ? 'checked' : ''}`;
-                card.innerHTML = `<img src="${item.i}" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='${item.c}';">` +
-                                `<div class="card-label">${item.n}</div>`;
-                card.onclick = () => toggle(item.id, card);
-                fGrid.appendChild(card);
-            });
+                card.appendChild(img);
+                card.innerHTML += `<div class="card-label"><div><strong>${item.n}</strong>${isLandmark ? '<br><small>'+item.d+'</small>' : ''}</div></div>`;
+                card.onclick = () => {
+                    const isChecked = card.classList.toggle('checked');
+                    isChecked ? localStorage.setItem(item.id, '1') : localStorage.removeItem(item.id);
+                };
+                return card;
+            };
 
-            // Render Doors
-            doors.forEach((name, i) => {
+            landmarks.forEach(item => lGrid.appendChild(createCard(item, true)));
+            features.forEach(item => fGrid.appendChild(createCard(item, false)));
+
+            ['Orange', 'Pink', 'Turquoise', 'Yellow', 'Red', 'Lime'].forEach((name, i) => {
+                const colors = ['#f05a28', '#f4a7b9', '#00afcb', '#ffd200', '#c41230', '#32cd32'];
                 const btn = document.createElement('button');
                 btn.className = 'door-btn';
-                btn.style.backgroundColor = doorColors[i];
+                btn.style.backgroundColor = colors[i];
                 let count = parseInt(localStorage.getItem('door-' + name)) || 0;
                 btn.innerHTML = `${name}<span id="d-${name}">${count}</span>`;
-                btn.onclick = (e) => { 
-                    e.stopPropagation();
-                    count++; 
-                    localStorage.setItem('door-' + name, count); 
-                    document.getElementById('d-' + name).innerText = count; 
-                };
+                btn.onclick = (e) => { e.stopPropagation(); count++; localStorage.setItem('door-' + name, count); document.getElementById('d-' + name).innerText = count; };
                 dGrid.appendChild(btn);
             });
         }
-
-        function toggle(id, el) {
-            const isChecked = el.classList.toggle('checked');
-            isChecked ? localStorage.setItem(id, '1') : localStorage.removeItem(id);
-        }
-
-        function resetAll() {
-            if(confirm('Clear all finds and start over?')) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-
-        // Start when the page is loaded
+        function resetAll() { if(confirm('Reset all scores?')) { localStorage.clear(); location.reload(); } }
         window.onload = init;
     </script>
 </body>
